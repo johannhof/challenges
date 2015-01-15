@@ -1,50 +1,41 @@
-function hp(x,y,data)
-  len = size (data[y],1)
-
+# a function to find the highest parent element
+function hp(x,y,prow)
   if x == 1
-    return data[y-1][1]
+    return prow[1]
   end
 
-  if x == len
-    return data[y - 1][size(data[y-1],1)]
+  if x > size(prow,1)
+    return prow[size(prow,1)]
   end
 
-  p1 = data[y-1][x - 1]
-  p2 = data[y-1][x]
+  p1 = prow[x - 1]
+  p2 = prow[x]
 
-  if p1 > p2
-    return p1
-  else
-    return p2
-  end
+  return p1 > p2 ? p1 : p2
 end
 
-
+# read from input file
 input = readlines(open("triangle.txt", "r"))
+
 n = size(input, 1)
-show(n)
 
+# initialize data containers
 data = Array (Array, 100)
+opt = Array (Array, 100)
 
+# transform input to fit data model
 for i = 1:n
   data[i] = map((x) -> parse (x) , split(input[i]))
 end
 
-res = Array (Array, 100)
+# satisfy our base case
+opt[1] = data[1]
 
-res[1] = data[1]
-
-for i = 2:n
-  res[i] = Array (Int64, i)
-end
-
+# the actual recurrence
 for y = 2:n
-  cur = data[y]
-  len = size (cur,1)
-  for x = 1:len
-    p = hp (x,y,res)
-    res[y][x] = data[y][x] + p
-  end
+  opt[y] = [ data[y][x] + hp(x,y,opt[y-1]) for x = 1:size(data[y],1) ]
 end
 
-show (res[n][indmax(res[n])])
+# print out the result
+# i have no idea why max(array) did not work for me
+print(opt[n][indmax(opt[n])])
