@@ -1,5 +1,4 @@
 # Dynamic Programming revisited
-##### Week 2 2015
 
 See https://projecteuler.net/problem=67
 

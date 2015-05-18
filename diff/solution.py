@@ -103,4 +103,4 @@ def lcs(orig, edit):
 
         common += max_snake
 
-lcs("i quest this nnnowwwwwwww", "i check this nowwww")
+lcs("The quick brown fox jumps over the lazy dog", "The quick brown dog leaps over the lazy cat")
